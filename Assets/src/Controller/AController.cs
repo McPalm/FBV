@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 
+/// <summary>
+/// Abstract class for controllers.
+/// Contains some utility to be used by controllers.
+/// The primary thing is that only one controller can ever be active. If a controller is enabled, all other controllers are disabled.
+/// </summary>
+
 abstract public class AController : NetworkBehaviour
 {
 	private bool dragging = false;
@@ -38,8 +44,14 @@ abstract public class AController : NetworkBehaviour
 		Startup();
 	}
 
+	/// <summary>
+	/// Called whenever this controller is enabled.
+	/// </summary>
 	abstract protected void Startup();
 
+	/// <summary>
+	/// The current mouse position in worldspace.
+	/// </summary>
 	static public Vector3 MousePosition
 	{
 		get
@@ -48,6 +60,9 @@ abstract public class AController : NetworkBehaviour
 		}
 	}
 
+	/// <summary>
+	/// The current map position rounded to closest integers
+	/// </summary>
 	static public IntVector2 MouseTile
 	{
 		get
@@ -56,6 +71,9 @@ abstract public class AController : NetworkBehaviour
 		}
 	}
 
+	/// <summary>
+	/// true if the mouse pointer is over and UI element or the user is panning the camera.
+	/// </summary>
 	public bool Blocked
 	{
 		get
@@ -64,11 +82,19 @@ abstract public class AController : NetworkBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Deactivate the current controller and return to the defalt controller.
+	/// </summary>
 	public void EnableDefaultController()
 	{
 		Default.enabled = true;
 	}
 
+	/// <summary>
+	/// Find a component of a certain type attached to the first collider underneath the mouse pointer.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <returns>A Component or null</returns>
 	protected T ComponentUnderMouse<T>() where T : Component
 	{
 		RaycastHit2D hit = Physics2D.Raycast(MousePosition, Vector2.zero);

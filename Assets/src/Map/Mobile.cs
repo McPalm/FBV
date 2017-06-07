@@ -4,6 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A moveable mapobject.
+/// Will slide into place rather than immediately snap into place.
+/// </summary>
+
 public class Mobile : MapObject
 {
 	void Awake()
@@ -11,16 +16,31 @@ public class Mobile : MapObject
 		AnimateMove = SlideTo;
 	}
 
+	/// <summary>
+	/// Syncronizes the objects posiotion among all cline.ts
+	/// Can only be called by the server.
+	/// </summary>
+	/// <param name="destination"></param>
 	internal void MoveTo(IntVector2 destination)
 	{
-		Location = destination;
+		if (isServer)
+			Location = destination;
+		else
+			Debug.LogWarning("Mobile.MoveTo called by client");
 	}
 
+	/// <summary>
+	/// Snaps the object to a given location locally.
+	/// </summary>
+	/// <param name="destination"></param>
 	internal void LocalMove(IntVector2 destination)
 	{
-		transform.position = new Vector2(Mathf.Round(destination.x), Mathf.Round(destination.y));
+		transform.position = (Vector3)destination;
 	}
 
+	/// <summary>
+	/// return the object to its actual position.
+	/// </summary>
 	internal void Return()
 	{
 		transform.position = (Vector3)Location;

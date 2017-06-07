@@ -3,6 +3,12 @@ using UnityEngine.Networking;
 using System.Collections;
 using UnityEngine.Events;
 
+/// <summary>
+/// A network script that syncronizes hitpoints across all clients.
+/// All changes has to be done serverside or they will not go through.
+/// Events are fired clientside. They should be used to update UI elements.
+/// </summary>
+
 public class HitPoints : NetworkBehaviour
 {
 	[SerializeField, SyncVar(hook = "OnChangeMax")]

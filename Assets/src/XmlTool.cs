@@ -4,6 +4,13 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Xml;
 
+/// <summary>
+/// A class that in a generic way converts serializable objects into and from XML files.
+/// System.Xml.Seralization contrains tags that can be useful in classes that are supposed to be serialized.
+/// The XML seralizer reads and write on all public fields and properties.
+/// You have to explicity mark properties you wish not to serialize with [XmlIgnore]
+/// </summary>
+
 public static class XmlTool
 {
 	public static string GetXMLString<T>(T target)

@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Continously streches a vertical object to fit between two objects.
+/// </summary>
+
 public class StrechBetweenTwoObjects : MonoBehaviour
 {
 	public GameObject target;
 	public GameObject origin;
 
-	
 	// Update is called once per frame
-	public void Update ()
+	protected void LateUpdate ()
 	{
 		if(target && origin)
 		{

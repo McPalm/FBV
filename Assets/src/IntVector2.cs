@@ -1,6 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// A vector 2 with the axises represented with integers instead of floatpoints.
+/// </summary>
+
 [System.Serializable]
 #pragma warning disable
 public struct IntVector2 : IEquatable<IntVector2>

@@ -16,7 +16,6 @@ public class CameraDrag : MonoBehaviour {
 
 	public static CameraDrag Instance 	{ get { return _instance; } }
 
-
 	void Awake()
 	{
 		State = Neutral;

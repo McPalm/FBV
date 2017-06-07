@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// An animated bar to represent hitpoints and similiar resources.
+/// </summary>
+
 public class Bar : MonoBehaviour
 {
 	[SerializeField]

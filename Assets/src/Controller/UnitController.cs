@@ -3,6 +3,10 @@ using UnityEngine.Events;
 using System.Collections;
 using System;
 
+/// <summary>
+/// A controller class that allows us to pickup and move objects with the Draggable component
+/// </summary>
+
 public class UnitController : AController
 {
 	[SerializeField]
@@ -50,7 +54,6 @@ public class UnitController : AController
 					arrow.origin = pickupOrigin;
 					pickupOrigin.transform.position = heldPiece.transform.position;
 					dropShadow.position = MousePosition + new Vector3(0f, 0f, 10f);
-					arrow.Update();
 				}
 			}
 		}
