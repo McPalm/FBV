@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 /// The primary thing is that only one controller can ever be active. If a controller is enabled, all other controllers are disabled.
 /// </summary>
 
-abstract public class AController : NetworkBehaviour
+abstract public class AController : MonoBehaviour
 {
 	private bool dragging = false;
 	AController defaultController;

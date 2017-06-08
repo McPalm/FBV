@@ -31,8 +31,7 @@ public class UnitController : AController
 	// Update is called once per frame
 	void Update ()
 	{
-		if(isLocalPlayer)
-			State();
+		State();
 	}
 
 	void Neutral()
