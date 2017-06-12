@@ -43,7 +43,7 @@ public class UnitController : AController
 			if(hit.collider)
 			{
 				Draggable d = hit.collider.GetComponent<Draggable>();
-				if (d && d.Owned)
+				if (d && d.Moveable)
 				{
 					heldPiece = d;
 					State = Drag;

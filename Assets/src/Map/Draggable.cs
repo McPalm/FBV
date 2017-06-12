@@ -9,20 +9,15 @@ using UnityEngine;
 [RequireComponent(typeof(Mobile), typeof(CircleCollider2D))]
 public class Draggable : MonoBehaviour
 {
-	[SerializeField]
-	bool owned = true;
+	bool moved = false;
 	Mobile mobile;
 
-	public bool Owned
+	public bool Moveable
 	{
 		get
 		{
-			return owned;
-		}
-
-		set
-		{
-			owned = value;
+			if (moved) return false;
+			return ClientRoster.Local.Contains(gameObject);
 		}
 	}
 
