@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AbilityController : AController
 {
@@ -9,10 +10,13 @@ public class AbilityController : AController
 
 	AAbility activeAbility;
 
+	public UnityEvent EventStateSelectTarget = new UnityEvent();
+
 	protected override void Startup()
 	{
 		State = SelectTarget;
-		if(activeAbility == null)
+		EventStateSelectTarget.Invoke();
+		if (activeAbility == null)
 		{
 			Debug.LogWarning("Entered use ability state with no active ability to use!");
 			EnableDefaultController();

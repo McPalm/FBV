@@ -17,17 +17,15 @@ public class UnitController : AController
 	GameObject pickupOrigin;
 	System.Action State;
 	Draggable heldPiece;
-	// CharacterSelector characterSelector;
 
 
 	public GameObjectEvent EventSelect = new GameObjectEvent();
-	// public CharacterEvent EventPickup = new CharacterEvent();
-	// public CharacterEvent EventDrop = new CharacterEvent();
+	public UnityEvent EventStateNeutral = new UnityEvent();
+	public UnityEvent EventStatePickup = new UnityEvent();
 
 	void Awake()
 	{
 		Default = this;
-		// characterSelector = FindObjectOfType<CharacterSelector>();
 	}
 
 	// Update is called once per frame
@@ -49,6 +47,7 @@ public class UnitController : AController
 				{
 					heldPiece = d;
 					State = Drag;
+					EventStatePickup.Invoke();
 					dropShadow.gameObject.SetActive(true);
 					arrow.gameObject.SetActive(true);
 					arrow.target = dropShadow.gameObject;
@@ -71,14 +70,15 @@ public class UnitController : AController
 			{
 				heldPiece.Mobile.LocalMove(MouseTile); // snap before tween action.
 				CommandInterface.Instance.CmdMove(heldPiece.gameObject, MouseTile);
-				// EventDrop.Invoke(heldPiece.GetComponent<Character>());
 				GetComponent<AbilityController>().enabled = true;
 			}
 			else
 			{
 				heldPiece.Mobile.Return();
+				State = Neutral;
+				EventStateNeutral.Invoke();
+
 			}
-			State = Neutral;
 			dropShadow.gameObject.SetActive(false);
 			arrow.gameObject.SetActive(false);
 		}
@@ -87,7 +87,8 @@ public class UnitController : AController
 	protected override void Startup()
 	{
 		State = Neutral;
-		if(pickupOrigin == null) pickupOrigin = new GameObject("Pickup Origin");
+		EventStateNeutral.Invoke();
+		if (pickupOrigin == null) pickupOrigin = new GameObject("Pickup Origin");
 	}
 
 	public bool CanMoveTo(Mobile user, IntVector2 targetLocation)
