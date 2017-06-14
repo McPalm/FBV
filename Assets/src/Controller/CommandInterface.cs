@@ -35,5 +35,11 @@ public class CommandInterface : NetworkBehaviour
 	{
 		target.GetComponent<Mobile>().MoveTo(destination);
 	}
+
+	[Command]
+	public void CmdUseAbility(GameObject ability, IntVector2 target)
+	{
+		ability.GetComponent<AAbility>().Use(target);
+	}
 }
 

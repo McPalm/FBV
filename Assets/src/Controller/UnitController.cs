@@ -19,6 +19,8 @@ public class UnitController : AController
 	Draggable heldPiece;
 	// CharacterSelector characterSelector;
 
+
+	public GameObjectEvent EventSelect = new GameObjectEvent();
 	// public CharacterEvent EventPickup = new CharacterEvent();
 	// public CharacterEvent EventDrop = new CharacterEvent();
 
@@ -53,6 +55,7 @@ public class UnitController : AController
 					arrow.origin = pickupOrigin;
 					pickupOrigin.transform.position = heldPiece.transform.position;
 					dropShadow.position = MousePosition + new Vector3(0f, 0f, 10f);
+					EventSelect.Invoke(heldPiece.gameObject);
 				}
 			}
 		}
@@ -69,6 +72,7 @@ public class UnitController : AController
 				heldPiece.Mobile.LocalMove(MouseTile); // snap before tween action.
 				CommandInterface.Instance.CmdMove(heldPiece.gameObject, MouseTile);
 				// EventDrop.Invoke(heldPiece.GetComponent<Character>());
+				GetComponent<AbilityController>().enabled = true;
 			}
 			else
 			{
@@ -99,4 +103,7 @@ public class UnitController : AController
 		return true;
 		*/
 	}
+
+	[System.Serializable]
+	public class GameObjectEvent : UnityEvent<GameObject> { }
 }
