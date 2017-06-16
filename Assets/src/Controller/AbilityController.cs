@@ -11,6 +11,7 @@ public class AbilityController : AController
 	AAbility activeAbility;
 
 	public UnityEvent EventStateSelectTarget = new UnityEvent();
+	public TilesEvent EventSelectTargetTiles = new TilesEvent();
 
 	protected override void Startup()
 	{
@@ -20,6 +21,10 @@ public class AbilityController : AController
 		{
 			Debug.LogWarning("Entered use ability state with no active ability to use!");
 			EnableDefaultController();
+		}
+		else
+		{
+			EventSelectTargetTiles.Invoke(activeAbility.TargetableTiles());
 		}
 	}
 
@@ -49,4 +54,7 @@ public class AbilityController : AController
 		else if (Input.GetButtonDown("Cancel"))
 			EnableDefaultController();
 	}
+
+	[Serializable]
+	public class TilesEvent : UnityEvent<IntVector2[]> { }
 }

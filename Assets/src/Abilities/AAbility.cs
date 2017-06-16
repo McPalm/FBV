@@ -11,6 +11,12 @@ abstract public class AAbility : NetworkBehaviour
 
 	public abstract bool UseableAt(IntVector2 target);
 
+	/// <summary>
+	/// For the users convenience, does not have to be accurate towards what goes thourhg UseableAt, but rather it should give the players a good visualisation of the ability
+	/// </summary>
+	/// <returns></returns>
+	public abstract IntVector2[] TargetableTiles();
+
 	protected GameObject GameObjectAt(IntVector2 location)
 	{
 		RaycastHit2D hit = Physics2D.Raycast((Vector2)location, Vector2.zero);

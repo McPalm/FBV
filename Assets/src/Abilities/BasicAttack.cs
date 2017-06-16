@@ -29,7 +29,7 @@ public class BasicAttack : AAbility
 	{
 		Mobile m = GetComponentInParent<Mobile>();
 
-		if((m.Location - target).MagnitudeSum == 1)
+		if((m.Location - target).MagnitudeMax == 1)
 		{
 			// in melee range
 			GameObject o = GameObjectAt(target);
@@ -56,5 +56,25 @@ public class BasicAttack : AAbility
 			yield return null; // wait for next frame.
 		}
 		m.transform.position = (Vector3)m.Location;
+	}
+
+	public override IntVector2[] TargetableTiles()
+	{
+		transform.localPosition = Vector3.zero;
+		IntVector2 orig = IntVector2.RoundFrom(transform.position);
+		IntVector2[] r =
+			{
+			orig + IntVector2.left,
+			orig + IntVector2.up,
+			orig + IntVector2.right,
+			orig + IntVector2.down,
+
+			orig + IntVector2.upleft,
+			orig + IntVector2.upright,
+			orig + IntVector2.downleft,
+			orig + IntVector2.downright,
+			};
+		return r;
+		
 	}
 }
