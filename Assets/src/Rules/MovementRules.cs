@@ -14,59 +14,47 @@ public class MovementRules : MonoBehaviour
 		// HashSet<IntVector2> s = new HashSet<IntVector2>();
 
 		// aint you a bit t big for an inline function?
-		System.Func<IntVector2, int> EnterCost = (IntVector2 iv2) =>
+		System.Func<IntVector2, IntVector2, int> EnterCost = (IntVector2 origin, IntVector2 target) =>
 		{
-			MapTerrain t = Obstructions.Instance.TerrainAt(iv2);
-			MapObject o = Obstructions.Instance.MobileAt(iv2);
+			if (BlockedAt(target)) return 999;
 
-			int cost = 1;
+			MapTerrain t = Obstructions.Instance.TerrainAt(target);
+			// Diagonal check
+			if(origin.x != target.x && origin.y != target.y)
+			{
+				if (
+					BlockedAt(new IntVector2(origin.x, target.y))
+					&&
+					BlockedAt(new IntVector2(target.x, origin.y))
+					)
+					return 999;
+			}
 
-			if(t)
-			{
-				if (t.wall || t.water)
-					return 999; // terrain block
-				if (t.difficultTerrain)
-					cost = 2; // difficult terrain
-			}
-			if(o)
-			{
-				MovementRules mr = o.GetComponent<MovementRules>();
-				if(mr)
-				{
-					if (mr.team == team) return cost;
-				}
-				return 999; // unit block
-			}
-			return cost; // regular movement
+			if (t && t.difficultTerrain) return 2;
+			return 1; // regular movement
 		};
 
 		HashSet<IntVector2> possibleMoves = Sprawl(orig, EnterCost, 5);
 		possibleMoves.ExceptWith(Obstructions.Instance.OccupiedTiles());
 		possibleMoves.Add(orig);
 		return possibleMoves;
+	}
 
-			/*
-		foreach(IntVector2 iv2 in IntVector2Utility.GetRect(orig - new IntVector2(5, 5), orig + new IntVector2(5, 5)))
+	bool BlockedAt(IntVector2 t)
+	{
+		MapTerrain mt = Obstructions.Instance.TerrainAt(t);
+		MapObject o = Obstructions.Instance.MobileAt(t);
+		if (mt && (mt.water || mt.wall)) return true;
+		if (o)
 		{
-			MapTerrain t = Obstructions.Instance.TerrainAt(iv2);
-			MapObject o = Obstructions.Instance.MobileAt(iv2);
-			if (o)
+			MovementRules mr = o.GetComponent<MovementRules>();
+			if (mr)
 			{
-
-				if (iv2 == orig) s.Add(iv2);
-				// no bueno
+				if (mr.team == team) return false;
 			}
-			else if (t)
-			{
-				if (!t.wall & !t.water)
-					s.Add(iv2);
-			}
-			else
-				s.Add(iv2);
+			return true; // unit block
 		}
-
-		return s;
-		*/
+		return false;
 	}
 
 	/// <summary>
@@ -75,10 +63,10 @@ public class MovementRules : MonoBehaviour
 	/// entercost is a multiplier for movement for entering a location, set it high to prevent movement completely.
 	/// </summary>
 	/// <param name="origin"></param>
-	/// <param name="enterCost"></param>
+	/// <param name="enterCost">A function that gives the cost for entering a square. The fields are origin, destination, it returns an integer. increased cost for diagonal movement should NOT be a part of this!</param>
 	/// <param name="range"></param>
 	/// <returns></returns>
-	static public HashSet<IntVector2> Sprawl(IntVector2 origin, System.Func<IntVector2, int> enterCost, int range)
+	static public HashSet<IntVector2> Sprawl(IntVector2 origin, System.Func<IntVector2, IntVector2, int> enterCost, int range)
 	{
 		int[,] moveLeft = new int[(range * 2 + 3), (range * 2 + 3)];
 
@@ -104,7 +92,7 @@ public class MovementRules : MonoBehaviour
 
 			foreach(IntVector2 t in cardinal)
 			{
-				int cost = enterCost(check[i] + t) * 2;
+				int cost = enterCost(check[i], check[i] + t) * 2;
 				if (budget - cost > MoveAt(check[i] + t))
 				{
 					SetMoveAt(check[i] + t, budget - cost);
@@ -114,7 +102,7 @@ public class MovementRules : MonoBehaviour
 
 			foreach (IntVector2 t in diagonal)
 			{
-				int cost = enterCost(check[i] + t) * 3;
+				int cost = enterCost(check[i], check[i] + t) * 3;
 				if (budget - cost > MoveAt(check[i] + t))
 				{
 					SetMoveAt(check[i] + t, budget - cost);
