@@ -20,6 +20,11 @@ public class Mobile : MapObject
 	{
 		base.Start();
 		Obstructions.Instance.Add(this);
+		HitPoints hp = GetComponent<HitPoints>();
+		if(hp)
+		{
+			hp.EventDeath.AddListener(UnSub);
+		}
 	}
 
 	/// <summary>
@@ -73,5 +78,12 @@ public class Mobile : MapObject
 			transform.position = (Vector2)iv2;
 		else
 			StartCoroutine(TweenTo((Vector2)iv2, 0.1f + distance / 6f));
+	}
+
+	void UnSub()
+	{
+		Obstructions.Instance.Remove(this);
+		if (GetComponent<Collider2D>())
+			GetComponent<Collider2D>().enabled = false;
 	}
 }

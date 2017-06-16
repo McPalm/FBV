@@ -19,6 +19,7 @@ public class HitPoints : NetworkBehaviour
 	public HealthEvent EventChangeHealth;
 	public IntEvent EventHurt;
 	public IntEvent EventHeal;
+	public UnityEvent EventDeath;
 
 	void Start()
 	{
@@ -73,12 +74,15 @@ public class HitPoints : NetworkBehaviour
 
 	void OnChangeDamage(int damageTaken)
 	{
+		print("Here!");
 		EventChangeHealth.Invoke(maxHealth - damageTaken, maxHealth);
+		if (damageTaken >= maxHealth) EventDeath.Invoke();
 	}
 
 	void OnChangeMax(int max)
 	{
 		EventChangeHealth.Invoke(max - damageTaken, max);
+		if (damageTaken >= maxHealth) EventDeath.Invoke();
 	}
 
 	[System.Serializable]

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,5 +50,10 @@ public class Obstructions : MonoBehaviour
 		foreach (Mobile m in mobiles)
 			o.Add(m.Location);
 		return o;
+	}
+
+	internal void Remove(Mobile mobile)
+	{
+		mobiles.Remove(mobile);
 	}
 }
