@@ -16,6 +16,12 @@ public class Mobile : MapObject
 		AnimateMove = SlideTo;
 	}
 
+	new protected void Start()
+	{
+		base.Start();
+		Obstructions.Instance.Add(this);
+	}
+
 	/// <summary>
 	/// Syncronizes the objects posiotion among all cline.ts
 	/// Can only be called by the server.
