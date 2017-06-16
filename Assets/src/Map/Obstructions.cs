@@ -41,4 +41,13 @@ public class Obstructions : MonoBehaviour
 			if (m.Location == iv2) return m;
 		return null;
 	}
+
+	// get all currently occupied tiles.
+	public HashSet<IntVector2> OccupiedTiles()
+	{
+		HashSet<IntVector2> o = new HashSet<IntVector2>();
+		foreach (Mobile m in mobiles)
+			o.Add(m.Location);
+		return o;
+	}
 }

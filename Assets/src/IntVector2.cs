@@ -82,6 +82,38 @@ public struct IntVector2 : IEquatable<IntVector2>
 		}
 	}
 
+	static public IntVector2 downleft
+	{
+		get
+		{
+			return new IntVector2(-1, -1);
+		}
+	}
+
+	static public IntVector2 downright
+	{
+		get
+		{
+			return new IntVector2(1, -1);
+		}
+	}
+
+	static public IntVector2 upleft
+	{
+		get
+		{
+			return new IntVector2(-1, 1);
+		}
+	}
+
+	static public IntVector2 upright
+	{
+		get
+		{
+			return new IntVector2(1, 1);
+		}
+	}
+
 	static public IntVector2 operator *(IntVector2 a, int b)
 	{
 		return new IntVector2(a.x * b, a.y * b);
