@@ -7,6 +7,7 @@ public struct Attributes
 	public int damageBonus;
 	public int damageRoll;
 	public int defence;
+	public int resistance;
 	public int movement;
 
 	public float HitVS(Attributes other)
@@ -24,6 +25,14 @@ public struct Attributes
 		get
 		{
 			return 9f / (9f + defence);
+		}
+	}
+
+	public float ResistanceDamageFactor
+	{
+		get
+		{
+			return 9f / (9f + resistance);
 		}
 	}
 
