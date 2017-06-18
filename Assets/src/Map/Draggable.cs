@@ -9,14 +9,14 @@ using UnityEngine;
 [RequireComponent(typeof(Mobile), typeof(CircleCollider2D))]
 public class Draggable : MonoBehaviour
 {
-	bool moved = false;
 	Mobile mobile;
 
 	public bool Moveable
 	{
 		get
 		{
-			if (moved) return false;
+			TurnEntry t = GetComponent<TurnEntry>();
+			if (t && t.Acted) return false;
 			return ClientRoster.Local.Contains(gameObject);
 		}
 	}
