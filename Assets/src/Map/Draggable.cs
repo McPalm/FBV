@@ -17,6 +17,7 @@ public class Draggable : MonoBehaviour
 		{
 			TurnEntry t = GetComponent<TurnEntry>();
 			if (t && t.Acted) return false;
+			if (!TurnTracker.Instance.IsMyTurn(gameObject)) return false;
 			return ClientRoster.Local.Contains(gameObject);
 		}
 	}
