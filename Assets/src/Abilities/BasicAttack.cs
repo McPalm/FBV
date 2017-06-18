@@ -20,8 +20,12 @@ public class BasicAttack : AAbility
 		// reduce health at the place
 		if (o)
 		{
-			o.GetComponent<HitPoints>().Hurt(UnityEngine.Random.Range(3, 6));
-			RpcClientCode(o);
+			Character c = GetComponentInParent<Character>();
+			// Character t = o.GetComponent<Character>();
+			bool hit = c.RollHit(o);
+			int dmg = c.RollDamage(o);
+			if (hit) o.GetComponent<HitPoints>().Hurt(dmg);
+			RpcClientCode(o, hit);
 		}
 	}
 
@@ -39,7 +43,7 @@ public class BasicAttack : AAbility
 	}
 
 	[ClientRpc]
-	private void RpcClientCode(GameObject target)
+	private void RpcClientCode(GameObject target, bool hit)
 	{
 		// animate
 		Mobile m = GetComponentInParent<Mobile>();

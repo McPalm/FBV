@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Mobile))]
 public class MovementRules : MonoBehaviour
 {
-	[SerializeField]
-	int team = 1; // spaghetti ?
+	public int team = 1; // spaghetti ?
+	public int speed = 5;
 
 	public HashSet<IntVector2> ReachableTiles()
 	{ 
@@ -34,7 +34,7 @@ public class MovementRules : MonoBehaviour
 			return 1; // regular movement
 		};
 
-		HashSet<IntVector2> possibleMoves = Sprawl(orig, EnterCost, 5);
+		HashSet<IntVector2> possibleMoves = Sprawl(orig, EnterCost, speed);
 		possibleMoves.ExceptWith(Obstructions.Instance.OccupiedTiles());
 		possibleMoves.Add(orig);
 		return possibleMoves;
