@@ -43,7 +43,7 @@ public class NukeSpell : AAbility
 			Character c = GetComponentInParent<Character>();
 			// Character t = o.GetComponent<Character>();
 			bool hit = c.RollHit(o);
-			int dmg = c.RollDamage(o);
+			int dmg = c.RollDamage(o, true);
 			if (hit) o.GetComponent<HitPoints>().Hurt(dmg);
 			RpcClientCode(o, hit);
 		}
@@ -62,7 +62,8 @@ public class NukeSpell : AAbility
 	[ClientRpc]
 	public void RpcClientCode(GameObject target, bool hit)
 	{
-		
+		if (hit) EventHit.Invoke(target);
+		else EventMiss.Invoke(target);
 	}
 
 	[Serializable]

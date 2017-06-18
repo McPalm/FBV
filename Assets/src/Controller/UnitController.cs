@@ -52,8 +52,8 @@ public class UnitController : AController
 					EventStatePickup.Invoke();
 					dropShadow.gameObject.SetActive(true);
 					arrow.gameObject.SetActive(true);
-					arrow.target = dropShadow.gameObject;
-					arrow.origin = pickupOrigin;
+					arrow.target = dropShadow;
+					arrow.origin = pickupOrigin.transform;
 					pickupOrigin.transform.position = heldPiece.transform.position;
 					dropShadow.position = MousePosition + new Vector3(0f, 0f, 10f);
 					EventSelect.Invoke(heldPiece.gameObject);

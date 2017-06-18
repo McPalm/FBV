@@ -42,11 +42,14 @@ public class Character : MonoBehaviour
 		return true;
 	}
 
-	public int RollDamage(GameObject o)
+	public int RollDamage(GameObject o, bool spell = false)
 	{
 		Character c = o.GetComponent<Character>();
 		if (c)
-			return Mathf.RoundToInt((Random.Range(0, attributes.damageRoll + 1) + attributes.damageBonus) * c.attributes.DefenceDamageFactor);
+			if(spell)
+				return Mathf.RoundToInt((Random.Range(0, attributes.damageRoll + 1) + attributes.damageBonus) * c.attributes.ResistanceDamageFactor);
+			else
+				return Mathf.RoundToInt((Random.Range(0, attributes.damageRoll + 1) + attributes.damageBonus) * c.attributes.DefenceDamageFactor);
 		return (Random.Range(0, attributes.damageRoll + 1) + attributes.damageBonus);
 
 	}
