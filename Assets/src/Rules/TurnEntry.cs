@@ -18,6 +18,10 @@ public class TurnEntry : NetworkBehaviour
 		{
 			return acted;
 		}
+		set
+		{
+			acted = value;
+		}
 	}
 
 	void Start()
