@@ -40,6 +40,7 @@ public class CommandInterface : NetworkBehaviour
 	public void CmdUseAbility(GameObject ability, IntVector2 target)
 	{
 		ability.GetComponent<AAbility>().Use(target);
+		ability.GetComponentInParent<TurnEntry>().RpcSetActed(true);
 	}
 }
 

@@ -12,7 +12,7 @@ using UnityEngine.Events;
 public class HitPoints : NetworkBehaviour
 {
 	[SerializeField, SyncVar(hook = "OnChangeMax")]
-	int maxHealth;
+	int maxHealth = 10;
 	[SerializeField, SyncVar(hook = "OnChangeDamage")]
 	int damageTaken;
 	
