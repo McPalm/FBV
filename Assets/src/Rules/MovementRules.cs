@@ -11,33 +11,30 @@ public class MovementRules : MonoBehaviour
 	public HashSet<IntVector2> ReachableTiles()
 	{ 
 		IntVector2 orig = GetComponent<Mobile>().Location;
-		// HashSet<IntVector2> s = new HashSet<IntVector2>();
-
-		// aint you a bit t big for an inline function?
-		System.Func<IntVector2, IntVector2, int> EnterCost = (IntVector2 origin, IntVector2 target) =>
-		{
-			if (BlockedAt(target)) return 999;
-
-			MapTerrain t = Obstructions.Instance.TerrainAt(target);
-			// Diagonal check
-			if(origin.x != target.x && origin.y != target.y)
-			{
-				if (
-					BlockedAt(new IntVector2(origin.x, target.y))
-					&&
-					BlockedAt(new IntVector2(target.x, origin.y))
-					)
-					return 999;
-			}
-
-			if (t && t.difficultTerrain) return 2;
-			return 1; // regular movement
-		};
-
 		HashSet<IntVector2> possibleMoves = Sprawl(orig, EnterCost, speed);
 		possibleMoves.ExceptWith(Obstructions.Instance.OccupiedTiles());
 		possibleMoves.Add(orig);
 		return possibleMoves;
+	}
+
+	int EnterCost(IntVector2 origin, IntVector2 destination)
+	{
+		if (BlockedAt(destination)) return 999;
+
+		MapTerrain t = Obstructions.Instance.TerrainAt(destination);
+		// Diagonal check
+		if (origin.x != destination.x && origin.y != destination.y)
+		{
+			if (
+				BlockedAt(new IntVector2(origin.x, destination.y))
+				&&
+				BlockedAt(new IntVector2(destination.x, origin.y))
+				)
+				return 999;
+		}
+
+		if (t && t.difficultTerrain) return 2;
+		return 1; // regular movement
 	}
 
 	bool BlockedAt(IntVector2 t)
