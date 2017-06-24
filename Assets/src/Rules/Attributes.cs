@@ -38,7 +38,7 @@ public struct Attributes
 
 	public int MinDamageVersus(Attributes other)
 	{
-		return UnityEngine.Mathf.RoundToInt(damageBonus * other.DefenceDamageFactor);
+		return UnityEngine.Mathf.RoundToInt((1 + damageBonus) * other.DefenceDamageFactor);
 	}
 
 	public int MaxDamageVersus(Attributes other)

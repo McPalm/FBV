@@ -47,9 +47,9 @@ public class Character : MonoBehaviour
 		Character c = o.GetComponent<Character>();
 		if (c)
 			if(spell)
-				return Mathf.RoundToInt((Random.Range(0, attributes.damageRoll + 1) + attributes.damageBonus) * c.attributes.ResistanceDamageFactor);
+				return Mathf.RoundToInt((Random.Range(1, attributes.damageRoll + 1) + attributes.damageBonus) * c.attributes.ResistanceDamageFactor);
 			else
-				return Mathf.RoundToInt((Random.Range(0, attributes.damageRoll + 1) + attributes.damageBonus) * c.attributes.DefenceDamageFactor);
+				return Mathf.RoundToInt((Random.Range(1, attributes.damageRoll + 1) + attributes.damageBonus) * c.attributes.DefenceDamageFactor);
 		return (Random.Range(0, attributes.damageRoll + 1) + attributes.damageBonus);
 
 	}
