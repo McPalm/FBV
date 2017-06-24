@@ -95,7 +95,7 @@ abstract public class AController : MonoBehaviour
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns>A Component or null</returns>
-	protected T ComponentUnderMouse<T>() where T : Component
+	static public T ComponentUnderMouse<T>() where T : Component
 	{
 		RaycastHit2D hit = Physics2D.Raycast(MousePosition, Vector2.zero);
 		if (hit.collider)
