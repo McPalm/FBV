@@ -37,6 +37,11 @@ public class AbilityController : AController
 		}
 	}
 
+	void OnDisable()
+	{
+		buttons.ClearIcons();
+	}
+
 	void Update()
 	{
 		State();
@@ -45,7 +50,13 @@ public class AbilityController : AController
 	public void SetUser(GameObject o)
 	{
 		user = o;
-		activeAbility = o.GetComponentInChildren<AAbility>();
+		AAbility[] aas = o.GetComponentsInChildren<AAbility>();
+		if (aas.Length == 0) return;
+		activeAbility = aas[0];
+		for(int i = 0; i < aas.Length; i++)
+		{
+			buttons.SetIcon(i, aas[i].icon);
+		}
 	}
 
 	void SelectTarget()

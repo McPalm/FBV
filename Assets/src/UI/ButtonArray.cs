@@ -19,6 +19,7 @@ public class ButtonArray : MonoBehaviour
 		for(int i = 0; i < buttons.Length; i++)
 		{
 			icons[i] = buttons[i].GetComponentsInChildren<Image>()[1];
+			icons[i].gameObject.SetActive(false);
 
 			int local = i;
 			UnityAction observer = () => EventButtonPressed.Invoke(local);
@@ -30,9 +31,18 @@ public class ButtonArray : MonoBehaviour
 	public void SetIcon(int index, Sprite icon)
 	{
 		if (index < icons.Length)
+		{
+			icons[index].gameObject.SetActive(icon != null);
 			icons[index].sprite = icon;
+		}
 		else
 			Debug.LogError("Index " + index + " not supported in " + name + "<ButtonArray>");
+	}
+
+	public void ClearIcons()
+	{
+		for (int i = 0; i < icons.Length; i++)
+			icons[i].gameObject.SetActive(false);
 	}
 
 	[System.Serializable]
