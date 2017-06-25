@@ -6,12 +6,21 @@ using UnityEngine.Events;
 
 public class AbilityController : AController
 {
+	[SerializeField]
+	ButtonArray buttons;
+
 	Action State;
 
+	GameObject user;
 	AAbility activeAbility;
 
 	public UnityEvent EventStateSelectTarget = new UnityEvent();
 	public TilesEvent EventSelectTargetTiles = new TilesEvent();
+
+	void Awake()
+	{
+		buttons.EventButtonPressed.AddListener(SelectAbility);
+	}
 
 	protected override void Startup()
 	{
@@ -35,6 +44,7 @@ public class AbilityController : AController
 
 	public void SetUser(GameObject o)
 	{
+		user = o;
 		activeAbility = o.GetComponentInChildren<AAbility>();
 	}
 
@@ -53,6 +63,19 @@ public class AbilityController : AController
 		}
 		else if (Input.GetButtonDown("Cancel"))
 			EnableDefaultController();
+	}
+
+	void SelectAbility(int i)
+	{
+		if (enabled && user)
+		{
+			AAbility[] aas = user.GetComponentsInChildren<AAbility>();
+			if (i < aas.Length)
+			{
+				activeAbility = aas[i];
+				EventSelectTargetTiles.Invoke(activeAbility.TargetableTiles());
+			}
+		}
 	}
 
 	[Serializable]
