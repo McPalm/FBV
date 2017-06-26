@@ -117,11 +117,11 @@ public class Projectile : MonoBehaviour
 	bool teardown = false;
 	void OnDestroy()
 	{
-		if (teardown) return;
-		Destroy(projectile.gameObject);
+		if(teardown) return;
+		if(projectile) Destroy(projectile.gameObject);
 		if(trail) Destroy(trail.gameObject);
-		if(tailEnd)Destroy(tailEnd.gameObject);
-		Destroy(dummy.gameObject);
+		if(tailEnd) Destroy(tailEnd.gameObject);
+		if(dummy) Destroy(dummy.gameObject);
 	}
 
 	[System.Serializable]
