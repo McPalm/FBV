@@ -48,6 +48,8 @@ public class BasicAttack : AAbility
 		// animate
 		Mobile m = GetComponentInParent<Mobile>();
 		StartCoroutine(Animation(m, target));
+		if (!hit) CombatTextPool.Instance.PrintAt(target.transform.position, "Dodge!", new Color(0.8f, 0f, 0.2f));
+			
 	}
 
 	private IEnumerator Animation(Mobile m, GameObject target)

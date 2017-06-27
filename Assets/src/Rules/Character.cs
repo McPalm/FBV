@@ -32,6 +32,18 @@ public class Character : MonoBehaviour
 	{
 		GetComponent<MovementRules>().speed = attributes.movement;
 		GetComponent<HitPoints>().MaxHealth = attributes.hp;
+
+		UnityEngine.Events.UnityAction<int> hurt = (int n) =>
+		{
+			PrintCombatMessage("-" + n.ToString(), new Color(0.8f, 0f, 0.2f));
+		};
+		UnityEngine.Events.UnityAction<int> heal = (int n) =>
+		{
+			PrintCombatMessage("+" + n.ToString(), new Color(0f, 0.8f, 0.2f));
+		};
+
+		GetComponent<HitPoints>().EventHurt.AddListener(hurt);
+		GetComponent<HitPoints>().EventHeal.AddListener(heal);
 	}
 
 	public bool RollHit(GameObject o)
@@ -52,5 +64,10 @@ public class Character : MonoBehaviour
 				return Mathf.RoundToInt((Random.Range(1, attributes.damageRoll + 1) + attributes.damageBonus) * c.attributes.DefenceDamageFactor);
 		return (Random.Range(0, attributes.damageRoll + 1) + attributes.damageBonus);
 
+	}
+
+	public void PrintCombatMessage(string m, Color c)
+	{
+		CombatTextPool.Instance.PrintAt(transform.position + new Vector3(0f, 0.65f), m, c, 1f + m.Length * 0.07f);
 	}
 }
