@@ -56,4 +56,16 @@ public class Obstructions : MonoBehaviour
 	{
 		mobiles.Remove(mobile);
 	}
+
+	/// <summary>
+	/// Checks if there is a line of sight between two locations
+	/// </summary>
+	/// <param name="a">location a</param>
+	/// <param name="b">locaiton b</param>
+	/// <returns>true if there is no walls blocking the line of sight between the two points</returns>
+	static public bool HasLOS(IntVector2 a, IntVector2 b)
+	{
+		RaycastHit2D r = Physics2D.Raycast((Vector2)a, (Vector2)(b - a), ((Vector2)a - (Vector2)b).magnitude, 1 << 8);
+		return r.collider == null;
+	}
 }
