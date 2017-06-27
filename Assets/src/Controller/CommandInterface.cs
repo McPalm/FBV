@@ -41,16 +41,13 @@ public class CommandInterface : NetworkBehaviour
 	{
 		ability.GetComponent<AAbility>().Use(target);
 		CmdEndTurn(ability.transform.parent.gameObject);
-		//ability.GetComponentInParent<TurnEntry>().RpcSetActed(true);
-		//FindObjectOfType<TurnTracker>().CheckAll();
 	}
 
 	[Command]
 	public void CmdEndTurn(GameObject o)
 	{
 		o.GetComponent<TurnEntry>().RpcSetActed(true);
-		o.GetComponent<TurnEntry>().Acted = true;
-		FindObjectOfType<TurnTracker>().CheckAll();
+		o.GetComponent<TurnEntry>().EndTurn();
 	}
 }
 

@@ -13,7 +13,6 @@ public class TurnTracker : NetworkBehaviour
 	[SerializeField]
 	UnityEngine.UI.Text corner;
 
-	public int moves = 0;
 	[SyncVar]
 	public int activeTeam = 0;
 
@@ -26,56 +25,48 @@ public class TurnTracker : NetworkBehaviour
 		}
 	}
 
-	public void CheckAll()
+	void Start()
 	{
-		moves++;
-		bool switchSide = false;
-		bool newTurn = false;
+		if (isServer)
+		{
+			TurnEntry.EventInactive.AddListener(CheckAll);
+			TurnEntry.EventEndTurn.AddListener(EndTurn);
+		}
+	}
+
+	/// <summary>
+	/// Check if we should let the turn over to the other player
+	/// </summary>
+	/// <param name="o"></param>
+	void EndTurn(GameObject acted)
+	{
+		bool allMoved = true;
+		// ensure team we switch into have moveable units.
+		if (activeTeam == 1)
+			foreach (GameObject o in RosterManager.Instance.Team1)
+				if (o.GetComponent<TurnEntry>().CanAct) allMoved = false;
+		if (activeTeam == 0)
+			foreach (GameObject o in RosterManager.Instance.Team2)
+				if (o.GetComponent<TurnEntry>().CanAct) allMoved = false;
+		if (allMoved)
+				return;
+		
+		activeTeam++;
+		activeTeam %= 2;
+		RpcAnnounceTurn(activeTeam);
+	}
+
+	/// <summary>
+	/// Checks if we need to refresh all units
+	/// </summary>
+	void CheckAll()
+	{	
 		if (EndOfTurn())
 		{
-			newTurn = true;
+			print("End Turn!");
 			StartCoroutine(RefreshAll());
 		}
-		else
-		{
-			// if all units in active team has moved, switch side
-			bool allMoved = true;
-
-			if (activeTeam == 0)
-				foreach (GameObject o in RosterManager.Instance.Team1)
-					if (!o.GetComponent<TurnEntry>().Acted) allMoved = false;
-
-			if (activeTeam == 1)
-				foreach (GameObject o in RosterManager.Instance.Team2)
-					if (!o.GetComponent<TurnEntry>().Acted) allMoved = false;
-
-			if (allMoved) switchSide = true;
-		}
-		if (!switchSide && moves == 2)
-		{
-			switchSide = true;
-		}
-		if (switchSide)
-		{
-			if(!newTurn)
-			{
-				bool allMoved = true;
-				// ensure team we switch into have moveable units.
-				if (activeTeam == 1)
-					foreach (GameObject o in RosterManager.Instance.Team1)
-						if (!o.GetComponent<TurnEntry>().Acted) allMoved = false;
-
-				if (activeTeam == 0)
-					foreach (GameObject o in RosterManager.Instance.Team2)
-						if (!o.GetComponent<TurnEntry>().Acted) allMoved = false;
-				if (allMoved)
-					return;
-			}
-			moves = 0;
-			activeTeam++;
-			activeTeam %= 2;
-			RpcAnnounceTurn(activeTeam);
-		}
+		print("...");
 	}
 
 	public bool IsMyTurn(GameObject o1)
@@ -91,8 +82,11 @@ public class TurnTracker : NetworkBehaviour
 
 	public bool EndOfTurn()
 	{
-		foreach(TurnEntry e in FindObjectsOfType<TurnEntry>())
-			if (!e.Acted) return false;
+		foreach (TurnEntry e in FindObjectsOfType<TurnEntry>())
+		{
+			print(e.name + " " + e.CanAct);
+			if (e.CanAct) return false;
+		}
 		return true;
 	}
 
