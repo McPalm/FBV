@@ -15,6 +15,8 @@ public class TurnTracker : NetworkBehaviour
 
 	[SyncVar]
 	public int activeTeam = 0;
+	[SyncVar]
+	public int turn = 0;
 
 	public static TurnTracker Instance
 	{
@@ -65,6 +67,9 @@ public class TurnTracker : NetworkBehaviour
 		{
 			print("End Turn!");
 			StartCoroutine(RefreshAll());
+			turn++;
+			activeTeam = turn % 2;
+			RpcAnnounceTurn(activeTeam);
 		}
 		print("...");
 	}
