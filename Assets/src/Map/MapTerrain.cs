@@ -16,5 +16,16 @@ public class MapTerrain : MonoBehaviour
 	void Start()
 	{
 		Obstructions.Instance.Add(this);
+		if(wall)
+		{
+			GameObject o = new GameObject("Hitbox");
+			o.transform.parent = transform;
+			o.transform.localPosition = Vector3.zero;
+			//o.transform.RotateAround(Vector3.up, 45f);
+			o.transform.Rotate(Vector3.forward, 45f);
+			BoxCollider2D p = o.AddComponent<BoxCollider2D>();
+			p.size = new Vector2(0.75f, 0.75f);
+			o.layer = 8; // wall layer
+		}
 	}
 }
