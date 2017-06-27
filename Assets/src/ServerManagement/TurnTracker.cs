@@ -65,13 +65,11 @@ public class TurnTracker : NetworkBehaviour
 	{	
 		if (EndOfTurn())
 		{
-			print("End Turn!");
 			StartCoroutine(RefreshAll());
 			turn++;
 			activeTeam = turn % 2;
 			RpcAnnounceTurn(activeTeam);
 		}
-		print("...");
 	}
 
 	public bool IsMyTurn(GameObject o1)
@@ -89,7 +87,6 @@ public class TurnTracker : NetworkBehaviour
 	{
 		foreach (TurnEntry e in FindObjectsOfType<TurnEntry>())
 		{
-			print(e.name + " " + e.CanAct);
 			if (e.CanAct) return false;
 		}
 		return true;
