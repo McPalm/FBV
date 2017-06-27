@@ -73,7 +73,15 @@ public class AbilityController : AController
 			}
 		}
 		else if (Input.GetButtonDown("Cancel"))
+		{
+			GetComponent<UnitController>().Undo();
 			EnableDefaultController();
+		}
+		else if (Input.GetButtonDown("Skip"))
+		{
+			EnableDefaultController(); // TODO, chance to return
+			CommandInterface.Instance.CmdEndTurn(user);
+		}
 	}
 
 	void SelectAbility(int i)

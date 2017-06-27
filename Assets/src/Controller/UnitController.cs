@@ -25,6 +25,8 @@ public class UnitController : AController
 	public UnityEvent EventStatePickup = new UnityEvent();
 	public IV2ArrayEvent EventMoveTiles = new IV2ArrayEvent();
 
+	IntVector2 PickLocation;
+
 	void Awake()
 	{
 		Default = this;
@@ -48,6 +50,7 @@ public class UnitController : AController
 				if (d && d.Moveable)
 				{
 					heldPiece = d;
+					PickLocation = heldPiece.GetComponent<Mobile>().Location;
 					State = Drag;
 					EventStatePickup.Invoke();
 					dropShadow.gameObject.SetActive(true);
@@ -69,6 +72,12 @@ public class UnitController : AController
 				}
 			}
 		}
+	}
+
+	internal void Undo()
+	{
+		heldPiece.transform.position = (Vector3)PickLocation;
+		CommandInterface.Instance.CmdMove(heldPiece.gameObject, PickLocation);
 	}
 
 	void Drag()
