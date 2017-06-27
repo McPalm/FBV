@@ -7,14 +7,36 @@ public class MovementRules : MonoBehaviour
 {
 	public int team = 1; // spaghetti ?
 	public int speed = 5;
+	public bool flight = false;
 
 	public HashSet<IntVector2> ReachableTiles()
 	{ 
 		IntVector2 orig = GetComponent<Mobile>().Location;
-		HashSet<IntVector2> possibleMoves = Sprawl(orig, EnterCost, speed);
+		HashSet<IntVector2> possibleMoves;
+		if (flight) possibleMoves = Sprawl(orig, FlyingEnterCost, speed);
+		else possibleMoves = Sprawl(orig, EnterCost, speed);
 		possibleMoves.ExceptWith(Obstructions.Instance.OccupiedTiles());
 		possibleMoves.Add(orig);
 		return possibleMoves;
+	}
+
+	int FlyingEnterCost(IntVector2 origin, IntVector2 destination)
+	{
+		if (BlockedFlightAt(destination)) return 999;
+
+		MapTerrain t = Obstructions.Instance.TerrainAt(destination);
+		// Diagonal check
+		if (origin.x != destination.x && origin.y != destination.y)
+		{
+			if (
+				BlockedFlightAt(new IntVector2(origin.x, destination.y))
+				&&
+				BlockedFlightAt(new IntVector2(destination.x, origin.y))
+				)
+				return 999;
+		}
+
+		return 1; // regular movement
 	}
 
 	int EnterCost(IntVector2 origin, IntVector2 destination)
@@ -51,6 +73,13 @@ public class MovementRules : MonoBehaviour
 			}
 			return true; // unit block
 		}
+		return false;
+	}
+
+	bool BlockedFlightAt(IntVector2 t)
+	{
+		MapTerrain mt = Obstructions.Instance.TerrainAt(t);
+		if (mt && mt.wall) return true;
 		return false;
 	}
 
