@@ -27,9 +27,10 @@ public class NukeSpell : AAbility
 		List<IntVector2> l = new List<IntVector2>();
 		foreach(IntVector2 iv2 in IntVector2Utility.GetRect(tile - new IntVector2(range, range), tile + new IntVector2(range, range)))
 		{
+			if (tile == iv2) continue;
 			if ((tile - iv2).MagnitudePF <= range)
-				l.Add(iv2);
-			// TODO, line of sight?
+				if(Obstructions.HasLOS(tile, iv2))
+					l.Add(iv2);
 		}
 		return l.ToArray();
 	}
@@ -51,10 +52,14 @@ public class NukeSpell : AAbility
 
 	public override bool UseableAt(IntVector2 target)
 	{
+		if (target == IntVector2.RoundFrom(transform.position)) return false;
 		if((GetComponentInParent<Mobile>().Location - target).MagnitudePF <= range)
 		{
-			GameObject o = GameObjectAt(target);
-			return o && o.GetComponent<HitPoints>();
+			if (Obstructions.HasLOS(IntVector2.RoundFrom(transform.position), target))
+			{
+				GameObject o = GameObjectAt(target);
+				return o && o.GetComponent<HitPoints>();
+			}
 		}
 		return false;
 	}
