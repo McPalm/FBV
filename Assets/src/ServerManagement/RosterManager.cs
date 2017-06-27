@@ -12,8 +12,6 @@ public class RosterManager : NetworkBehaviour
 	[SerializeField]
 	GameObject[] team2;
 
-	public int count = 0;
-
 	public GameObject[] Team1
 	{
 		get
@@ -39,11 +37,16 @@ public class RosterManager : NetworkBehaviour
 		}
 	}
 
-	public GameObject[] GetRoster()
+	public GameObject[] GetAll()
 	{
-		count++;
-		if(count == 1)
-			return Team1;
-		return Team2;
+		GameObject[] both = new GameObject[team1.Length + team2.Length];
+		for(int i = 0; i < both.Length; i++)
+		{
+			if (i < team1.Length)
+				both[i] = team1[i];
+			else
+				both[i] = team2[i - team1.Length];
+		}
+		return both;
 	}
 }

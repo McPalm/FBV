@@ -18,22 +18,10 @@ public class ClientRoster : NetworkBehaviour
 		}
 	}
 
-	protected void Start()
+	void Start()
 	{
-		if (isServer)
-		{
-			GetID();
-		}
-		if(isLocalPlayer)
-		{
+		if (isLocalPlayer)
 			local = this;
-		}
-	}
-
-	public void GetID()
-	{
-		roster = FindObjectOfType<RosterManager>().GetRoster();
-		RpcAssignRoster(roster);
 	}
 
 	[ClientRpc]
@@ -47,5 +35,29 @@ public class ClientRoster : NetworkBehaviour
 		foreach (GameObject o2 in roster)
 			if (o2 == o) return true;
 		return false;
+	}
+
+	public void Master()
+	{
+		CmdRequestTeam(0);
+	}
+
+	public void PickTeam(int team)
+	{
+		CmdRequestTeam(team);
+	}
+
+	[Command]
+	public void CmdRequestTeam(int i)
+	{
+		GameObject[] os = null;
+		if (i == 0)
+			os = FindObjectOfType<RosterManager>().GetAll();
+		if (i == 1)
+			os = FindObjectOfType<RosterManager>().Team1;
+		if (i == 2)
+			os = FindObjectOfType<RosterManager>().Team2;
+		if (os != null)
+			RpcAssignRoster(os);
 	}
 }
