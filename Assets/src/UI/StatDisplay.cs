@@ -27,14 +27,17 @@ public class StatDisplay : MonoBehaviour
 
 	void show(Attributes a, int hp)
 	{
+		/*
 		summary.text =
 			"HP: " + hp + "/" + a.hp + "\n" +
-			"Dmg: 1d" + a.damageRoll + "+" + a.damageBonus + "\n" +
+			"Dmg: 1d" + a.damageRoll + "+" + a.might + "\n" +
 			"Hit: " + a.hit + "\n" +
 			"Dodge: " + a.dodge + "\n" +
-			"Defence: " + a.defence + " (" + Mathf.RoundToInt(100f - a.DefenceDamageFactor * 100f) + "%)\n" +
+			"Defence: " + a.armor + " (" + Mathf.RoundToInt(100f - a.DefenceDamageFactor * 100f) + "%)\n" +
 			"Resistance: " + a.resistance + " (" + Mathf.RoundToInt(100f - a.ResistanceDamageFactor * 100f) + "%)\n" +
-			"Speed: " + a.movement;
+			"Speed: " + a.speed;
+			*/
+			// TODO
 	}
 
 	public void Hide()

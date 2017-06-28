@@ -10,10 +10,13 @@ public class AttackPrognosis : MonoBehaviour
 
 	public void Show(Character attacker, Character target)
 	{
+		/*
 		int hitChance = Mathf.RoundToInt(100f * attacker.Attributes.HitVS(target.Attributes));
 		int minDamage = attacker.Attributes.MinDamageVersus(target.Attributes);
 		int maxDamage = attacker.Attributes.MaxDamageVersus(target.Attributes);
 
 		display.text = minDamage + "-" + maxDamage + " (" + hitChance + "%)";
+		*/
+		// TODO
 	}
 }

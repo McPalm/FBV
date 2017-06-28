@@ -24,7 +24,7 @@ public class MovementRules : MonoBehaviour
 	{
 		if (BlockedFlightAt(destination)) return 999;
 
-		MapTerrain t = Obstructions.Instance.TerrainAt(destination);
+		// MapTerrain t = Obstructions.Instance.TerrainAt(destination);
 		// Diagonal check
 		if (origin.x != destination.x && origin.y != destination.y)
 		{

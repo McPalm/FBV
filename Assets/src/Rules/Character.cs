@@ -30,7 +30,7 @@ public class Character : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		GetComponent<MovementRules>().speed = attributes.movement;
+		GetComponent<MovementRules>().speed = attributes.speed;
 		GetComponent<HitPoints>().MaxHealth = attributes.hp;
 
 		UnityEngine.Events.UnityAction<int> hurt = (int n) =>
@@ -48,22 +48,24 @@ public class Character : MonoBehaviour
 
 	public bool RollHit(GameObject o)
 	{
-		Character c = o.GetComponent<Character>();
-		if(c)
-			return Random.value < attributes.HitVS(c.attributes);
+		//Character c = o.GetComponent<Character>();
+		//if(c)
+		//	return Random.value < attributes.HitVS(c.attributes);
 		return true;
 	}
 
 	public int RollDamage(GameObject o, bool spell = false)
 	{
+		/*
 		Character c = o.GetComponent<Character>();
 		if (c)
 			if(spell)
-				return Mathf.RoundToInt((Random.Range(1, attributes.damageRoll + 1) + attributes.damageBonus) * c.attributes.ResistanceDamageFactor);
+				return Mathf.RoundToInt((Random.Range(1, attributes.damageRoll + 1) + attributes.might) * c.attributes.ResistanceDamageFactor);
 			else
-				return Mathf.RoundToInt((Random.Range(1, attributes.damageRoll + 1) + attributes.damageBonus) * c.attributes.DefenceDamageFactor);
-		return (Random.Range(0, attributes.damageRoll + 1) + attributes.damageBonus);
-
+				return Mathf.RoundToInt((Random.Range(1, attributes.damageRoll + 1) + attributes.might) * c.attributes.DefenceDamageFactor);
+		return (Random.Range(0, attributes.damageRoll + 1) + attributes.might);
+		*/
+		return 5; // TODO
 	}
 
 	public void PrintCombatMessage(string m, Color c)
