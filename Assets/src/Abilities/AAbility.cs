@@ -6,6 +6,9 @@ using UnityEngine.Networking;
 abstract public class AAbility : NetworkBehaviour
 {
 	public Sprite icon;
+	public string AbilityName;
+
+	public abstract string Description { get; }
 
 	public abstract void Use(IntVector2 target);
 

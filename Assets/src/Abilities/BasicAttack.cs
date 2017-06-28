@@ -14,6 +14,14 @@ public class BasicAttack : AAbility
 		}
 	}
 
+	public override string Description
+	{
+		get
+		{
+			return "Old attack ability";
+		}
+	}
+
 	public override void Use(IntVector2 target)
 	{
 		GameObject o = GameObjectAt(target);

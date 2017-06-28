@@ -20,6 +20,14 @@ public class NukeSpell : AAbility
 		}
 	}
 
+	public override string Description
+	{
+		get
+		{
+			return "Old nuke ability";
+		}
+	}
+
 	public override IntVector2[] TargetableTiles()
 	{
 		transform.localPosition = Vector3.zero;
