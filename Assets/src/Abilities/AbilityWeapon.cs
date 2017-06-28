@@ -18,7 +18,8 @@ public class AbilityWeapon : AAbility
 	{
 		get
 		{
-			return "DMG: 2d" + diceSize + "\tRange: " + range + "\n" + DamageTypeDescription(damageType, diceSize);
+			if(damageType == DamageType.magic) return "DMG: 2d" + diceSize + "\tRange: " + range + "\n" + DamageTypeDescription(damageType, diceSize);
+			return "DMG: 2d" + diceSize + "+Might \tRange: " + range + "\n" + DamageTypeDescription(damageType, diceSize);
 		}
 	}
 
