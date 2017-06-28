@@ -96,7 +96,6 @@ public class AbilityWeapon : AAbility
 			{
 				armor = enemy.Attributes.armor;
 				dice = DiceVS(damageType, enemy.Attributes.armorType);
-				print(dice);
 			}
 
 			// roll and apply armor
@@ -129,8 +128,6 @@ public class AbilityWeapon : AAbility
 
 	static public int DiceVS(DamageType dt, ArmorType at)
 	{
-		print(dt);
-		print(at);
 		switch (dt)
 		{
 			case DamageType.slashing:
@@ -146,7 +143,6 @@ public class AbilityWeapon : AAbility
 				if (at == ArmorType.plate) return 3;
 				return 2;
 		}
-		print("Fall Through");
 		return 2; // default to 2 d6.
 	}
 			 

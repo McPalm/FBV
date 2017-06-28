@@ -10,13 +10,24 @@ public class AttackPrognosis : MonoBehaviour
 
 	public void Show(Character attacker, Character target)
 	{
-		/*
-		int hitChance = Mathf.RoundToInt(100f * attacker.Attributes.HitVS(target.Attributes));
-		int minDamage = attacker.Attributes.MinDamageVersus(target.Attributes);
-		int maxDamage = attacker.Attributes.MaxDamageVersus(target.Attributes);
+		AbilityWeapon weapon = attacker.GetComponentInChildren<AbilityWeapon>();
+		int minDamage = 0, maxDamage = 0;
 
-		display.text = minDamage + "-" + maxDamage + " (" + hitChance + "%)";
-		*/
-		// TODO
+		if (weapon.damageType == DamageType.magic)
+		{
+			minDamage = 2;
+			maxDamage = weapon.diceSize * 2;
+		}
+		else
+		{
+			int sides = AbilityWeapon.DiceVS(weapon.damageType, target.Attributes.armorType);
+			minDamage = sides + attacker.Attributes.might - target.Attributes.armor;
+			maxDamage = sides * weapon.diceSize + attacker.Attributes.might - target.Attributes.armor;
+			
+		}
+
+		if (minDamage < 0) minDamage = 0;
+		if (maxDamage < 0) maxDamage = 0;
+		display.text = minDamage + "-" + maxDamage;
 	}
 }
