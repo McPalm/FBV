@@ -21,23 +21,12 @@ public class StatDisplay : MonoBehaviour
 	{
 		if(c)
 		{
-			show(c.Attributes, c.GetComponent<HitPoints>().CurrentHealth);
+			// show(c.Attributes, c.GetComponent<HitPoints>().CurrentHealth);
+			string cha = string.Format("HP {0}/{1}\t   Might {2}\nArmor {3} ({4})\t   Speed {5}",
+				c.GetComponent<HitPoints>().CurrentHealth, c.Attributes.hp, c.Attributes.might, c.Attributes.armor, c.Attributes.armorType, c.Attributes.speed);
+			string wpn = c.GetComponentInChildren<AbilityWeapon>().Description;
+			summary.text = c.name + "\n" + cha + "\n\n" + wpn;
 		}
-	}
-
-	void show(Attributes a, int hp)
-	{
-		/*
-		summary.text =
-			"HP: " + hp + "/" + a.hp + "\n" +
-			"Dmg: 1d" + a.damageRoll + "+" + a.might + "\n" +
-			"Hit: " + a.hit + "\n" +
-			"Dodge: " + a.dodge + "\n" +
-			"Defence: " + a.armor + " (" + Mathf.RoundToInt(100f - a.DefenceDamageFactor * 100f) + "%)\n" +
-			"Resistance: " + a.resistance + " (" + Mathf.RoundToInt(100f - a.ResistanceDamageFactor * 100f) + "%)\n" +
-			"Speed: " + a.speed;
-			*/
-			// TODO
 	}
 
 	public void Hide()
