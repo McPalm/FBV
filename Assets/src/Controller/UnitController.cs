@@ -116,15 +116,6 @@ public class UnitController : AController
 		if (moveTiles != null)
 			return moveTiles.Contains(targetLocation);
 		return true;
-		/*
-		IntVector2 orig = IntVector2.RoundFrom(user.GetComponent<Mobile>().location);
-		orig -= targetLocation;
-		// if (orig.ManahattanMagnitude > user.movement) return false;
-
-		// TODO, refine this. Use like a ditrjokas algorithm.
-
-		return true;
-		*/
 	}
 
 	[System.Serializable]

@@ -77,7 +77,10 @@ public class Mobile : MapObject
 		if (distance < 0.5f)
 			transform.position = (Vector2)iv2;
 		else
+		{
+			StopAllCoroutines();
 			StartCoroutine(TweenTo((Vector2)iv2, 0.1f + distance / 6f));
+		}
 	}
 
 	void UnSub()
