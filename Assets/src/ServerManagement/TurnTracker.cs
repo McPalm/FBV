@@ -114,8 +114,8 @@ public class TurnTracker : NetworkBehaviour
 		{
 			centre.text = "Red Move";
 			centre.color = new Color(1f, 0.2f, 0.3f);
-			corner.text = "Blue Move";
-			corner.color = new Color(0.3f, 0.2f, 1f);
+			corner.text = "Red Move";
+			corner.color = new Color(1f, 0.2f, 0.3f);
 		}
 		StartCoroutine(HideText());
 	}
