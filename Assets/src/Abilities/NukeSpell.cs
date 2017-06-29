@@ -72,7 +72,7 @@ public class NukeSpell : AAbility
 		return false;
 	}
 
-	[ClientRpc]
+	//[ClientRpc]
 	public void RpcClientCode(GameObject target, bool hit)
 	{
 		if (hit) EventHit.Invoke(target);

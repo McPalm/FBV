@@ -50,7 +50,7 @@ public class BasicAttack : AAbility
 		return false;
 	}
 
-	[ClientRpc]
+	//[ClientRpc]
 	private void RpcClientCode(GameObject target, bool hit)
 	{
 		// animate

@@ -37,10 +37,10 @@ public class CommandInterface : NetworkBehaviour
 	}
 
 	[Command]
-	public void CmdUseAbility(GameObject ability, IntVector2 target)
+	public void CmdUseAbility(GameObject user, IntVector2 target)
 	{
-		ability.GetComponent<AAbility>().Use(target);
-		CmdEndTurn(ability.transform.parent.gameObject);
+		user.GetComponentInChildren<AAbility>().Use(target);
+		CmdEndTurn(user);
 	}
 
 	[Command]

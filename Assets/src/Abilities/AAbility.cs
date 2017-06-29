@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-abstract public class AAbility : NetworkBehaviour
+abstract public class AAbility : MonoBehaviour
 {
 	public Sprite icon;
 	public string AbilityName;

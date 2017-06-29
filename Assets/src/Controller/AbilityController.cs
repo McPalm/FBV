@@ -66,9 +66,7 @@ public class AbilityController : AController
 			if (Blocked) return;
 			if (activeAbility.UseableAt(MouseTile))
 			{
-				// HACK, only usable on server right now.
-				// activeAbility.Use(MouseTile);
-				CommandInterface.Instance.CmdUseAbility(activeAbility.gameObject, MouseTile);
+				CommandInterface.Instance.CmdUseAbility(user, MouseTile);
 				EnableDefaultController();
 			}
 		}

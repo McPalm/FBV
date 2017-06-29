@@ -119,7 +119,7 @@ public class AbilityWeapon : AAbility
 		}
 	}
 
-	[ClientRpc]
+	//[ClientRpc]
 	public void RpcClientCode(GameObject target, bool hit)
 	{
 		if (hit) EventHit.Invoke(target);
