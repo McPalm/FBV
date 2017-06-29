@@ -42,7 +42,7 @@ public class AbilityController : AController
 		buttons.ClearIcons();
 	}
 
-	void Update()
+	void LateUpdate()
 	{
 		State();
 	}
