@@ -74,6 +74,7 @@ public class HitPoints : NetworkBehaviour
 
 	void OnChangeDamage(int damageTaken)
 	{
+		this.damageTaken = damageTaken;
 		EventChangeHealth.Invoke(maxHealth - damageTaken, maxHealth);
 		if (damageTaken >= maxHealth) EventDeath.Invoke();
 	}
