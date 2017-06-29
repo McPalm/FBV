@@ -28,6 +28,6 @@ public class AttackPrognosis : MonoBehaviour
 
 		if (minDamage < 0) minDamage = 0;
 		if (maxDamage < 0) maxDamage = 0;
-		display.text = minDamage + "-" + maxDamage;
+		display.text = "HP " + target.GetComponent<HitPoints>().CurrentHealth + "\n" + minDamage + "-" + maxDamage;
 	}
 }
