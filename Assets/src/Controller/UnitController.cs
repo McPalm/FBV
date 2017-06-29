@@ -33,7 +33,7 @@ public class UnitController : AController
 	}
 
 	// Update is called once per frame
-	void Update ()
+	void LateUpdate ()
 	{
 		State();
 	}
