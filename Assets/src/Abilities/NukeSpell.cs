@@ -43,7 +43,7 @@ public class NukeSpell : AAbility
 		return l.ToArray();
 	}
 
-	public override void Use(IntVector2 target)
+	public override bool Use(IntVector2 target)
 	{
 		GameObject o = GameObjectAt(target);
 		// reduce health at the place
@@ -55,7 +55,9 @@ public class NukeSpell : AAbility
 			int dmg = c.RollDamage(o, true);
 			if (hit) o.GetComponent<HitPoints>().Hurt(dmg);
 			RpcClientCode(o, hit);
+			return hit;
 		}
+		return false;
 	}
 
 	public override bool UseableAt(IntVector2 target)

@@ -39,7 +39,8 @@ public class CommandInterface : NetworkBehaviour
 	[Command]
 	public void CmdUseAbility(GameObject user, IntVector2 target)
 	{
-		user.GetComponentInChildren<AAbility>().Use(target);
+		bool hit = user.GetComponentInChildren<AAbility>().Use(target);
+		RpcAnimateAbility(user, target, hit);
 		CmdEndTurn(user);
 	}
 
@@ -48,6 +49,13 @@ public class CommandInterface : NetworkBehaviour
 	{
 		o.GetComponent<TurnEntry>().RpcSetActed(true);
 		o.GetComponent<TurnEntry>().EndTurn();
+	}
+
+	[ClientRpc]
+	void RpcAnimateAbility(GameObject user, IntVector2 target, bool hit)
+	{
+		if(hit) user.GetComponentInChildren<AAbility>().HitAnimation.Invoke(target);
+		else user.GetComponentInChildren<AAbility>().MissAnimation.Invoke(target);
 	}
 }
 

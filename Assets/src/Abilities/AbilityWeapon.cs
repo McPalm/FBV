@@ -11,9 +11,6 @@ public class AbilityWeapon : AAbility
 	public int range = 1;
 	public DamageType damageType = DamageType.slashing;
 
-	public GameObjectEvent EventHit = new GameObjectEvent();
-	public GameObjectEvent EventMiss = new GameObjectEvent();
-
 	public override string Description
 	{
 		get
@@ -82,7 +79,7 @@ public class AbilityWeapon : AAbility
 
 	}
 
-	public override void Use(IntVector2 target)
+	public override bool Use(IntVector2 target)
 	{
 		GameObject o = GameObjectAt(target);
 		if (o)
@@ -115,15 +112,10 @@ public class AbilityWeapon : AAbility
 			// apply damage
 			bool hit = true;
 			if (hit) o.GetComponent<HitPoints>().Hurt(totalDamage);
-			RpcClientCode(o, hit);
-		}
-	}
 
-	//[ClientRpc]
-	public void RpcClientCode(GameObject target, bool hit)
-	{
-		if (hit) EventHit.Invoke(target);
-		else EventMiss.Invoke(target);
+			return hit;
+		}
+		return false;
 	}
 
 	static public int DiceVS(DamageType dt, ArmorType at)
@@ -175,7 +167,4 @@ public class AbilityWeapon : AAbility
 		}
 		return false;
 	}
-
-	[Serializable]
-	public class GameObjectEvent : UnityEvent<GameObject> { }
 }

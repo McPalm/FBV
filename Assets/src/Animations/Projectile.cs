@@ -62,6 +62,21 @@ public class Projectile : MonoBehaviour
 		StartCoroutine(Animate(dummy, projectile, time, stick));
 	}
 
+	public void FireAt(IntVector2 iv2)
+	{
+		projectile.transform.position = transform.position;
+		float time = (distanceFactor) ? travelingTime * ((Vector3)iv2 - transform.position).magnitude : travelingTime;
+		dummy.transform.position = (Vector3)iv2;
+		StartCoroutine(Animate(dummy, projectile, time, stick));
+	}
+	public void FirePast(IntVector2 iv2)
+	{
+		projectile.transform.position = transform.position;
+		dummy.position = (Vector3)iv2 + ((Vector3)iv2 - transform.position) * 0.75f + new Vector3(Random.value, Random.value);
+		float time = (distanceFactor) ? travelingTime * ((Vector3)iv2 - transform.position).magnitude : travelingTime;
+		StartCoroutine(Animate(dummy, projectile, time, stick));
+	}
+
 	IEnumerator Animate(Transform goal, Transform projectile, float time, float stick)
 	{
 		projectile.gameObject.SetActive(true);

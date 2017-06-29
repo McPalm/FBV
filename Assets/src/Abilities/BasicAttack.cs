@@ -22,7 +22,7 @@ public class BasicAttack : AAbility
 		}
 	}
 
-	public override void Use(IntVector2 target)
+	public override bool Use(IntVector2 target)
 	{
 		GameObject o = GameObjectAt(target);
 		// reduce health at the place
@@ -33,8 +33,9 @@ public class BasicAttack : AAbility
 			bool hit = c.RollHit(o);
 			int dmg = c.RollDamage(o);
 			if (hit) o.GetComponent<HitPoints>().Hurt(dmg);
-			RpcClientCode(o, hit);
+			return hit;
 		}
+		return false;
 	}
 
 	public override bool UseableAt(IntVector2 target)
