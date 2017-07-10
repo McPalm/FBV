@@ -66,7 +66,7 @@ public class Projectile : MonoBehaviour
 	{
 		projectile.transform.position = transform.position;
 		float time = (distanceFactor) ? travelingTime * ((Vector3)iv2 - transform.position).magnitude : travelingTime;
-		dummy.transform.position = (Vector3)iv2;
+		dummy.transform.position = (Vector3)iv2 + new Vector3(0f, 0.33f);
 		StartCoroutine(Animate(dummy, projectile, time, stick));
 	}
 	public void FirePast(IntVector2 iv2)
